@@ -1,29 +1,61 @@
 import 'package:flutter/material.dart';
-
-import 'example.dart';
-
+import 'package:flutter_star/flutter_star.dart';
 
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // Try running your application with "flutter run". You'll see the
-        // application has a blue toolbar. Then, without quitting the app, try
-        // changing the primarySwatch below to Colors.green and then invoke
-        // "hot reload" (press "r" in the console where you ran "flutter run",
-        // or simply save your changes to "hot reload" in a Flutter IDE).
-        // Notice that the counter didn't reset back to zero; the application
-        // is not restarted.
         primarySwatch: Colors.blue,
       ),
-      home: Scaffold(appBar: AppBar(), body: Center(child: Example())),
+      home: Scaffold(
+          appBar: AppBar(),
+          body: Center(
+              child: Column(
+            children: <Widget>[
+              StarWidget(
+                star: Star(
+                    progress: 0.8, num: 5, fat: 0.6, fillColor: Colors.green),
+              ),
+              _buildStarScore(),
+              _buildCustomRating()
+            ],
+          ))),
     );
   }
+
+  Widget _buildStarScore() => StarScore(
+    score: 4.8,
+    star: Star(
+        fillColor: Colors.tealAccent,
+        emptyColor: Colors.grey.withAlpha(88)),
+    tail: Column(
+      children: <Widget>[
+        Text("综合评分"),
+        Text("4.8"),
+      ],
+    ),
+  );
+
+  Widget _buildCustomRating() => Column(
+    children: <Widget>[
+      CustomRating(onRating: (s) {
+        print(s);
+      }),
+      CustomRating(
+          max: 6,
+          score: 3.0,
+          star: Star(
+              num: 12,
+              fillColor: Colors.orangeAccent,
+              fat: 0.6,
+              emptyColor: Colors.grey.withAlpha(88)),
+          onRating: (s) {
+            print(s);
+          }),
+    ],
+  );
 }
